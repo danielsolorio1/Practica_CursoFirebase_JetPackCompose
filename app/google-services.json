@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "107223302630",
+    "project_id": "fir-lite-c9621",
+    "storage_bucket": "fir-lite-c9621.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107223302630:android:f0144de59b1770edf7d627",
+        "android_client_info": {
+          "package_name": "com.example.cursofirebaselite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZjwTVdzISQ4bro0RyDYUFtD98-anTS2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
