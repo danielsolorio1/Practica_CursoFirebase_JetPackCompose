@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">CursoFirebaseLite</string>
-    <string name="title_home">Recently Played</string>
+    <string name="title_home">Escuchadas recientes</string>
 </resources>

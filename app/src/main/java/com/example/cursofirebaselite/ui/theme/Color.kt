@@ -18,3 +18,5 @@ val ShapeButton = Color(0xFF3e3e3e)
 
 val SelectedField = Color(0xFF7c7c7c)
 val UnselectedField = Color(0xFF4a4a4a)
+
+val playerColor = Color(0xFF758D88)
