@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cursofirebaselite.presentation.model.Artist
+import com.example.cursofirebaselite.presentation.model.PlayList
 import com.example.cursofirebaselite.presentation.model.Player
+import com.example.cursofirebaselite.presentation.model.Suggestions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -30,6 +32,12 @@ class HomeViewModel : ViewModel() {
     private val _artist = MutableStateFlow<List<Artist>>(emptyList())
     val artist: StateFlow<List<Artist>> = _artist
 
+    private val _playlist = MutableStateFlow<List<PlayList>>(emptyList())
+    val playlist: StateFlow<List<PlayList>> = _playlist
+
+    private val _suggestions = MutableStateFlow<List<Suggestions>>(emptyList())
+    val suggestions: StateFlow<List<Suggestions>> = _suggestions
+
     private val _player = MutableStateFlow<Player?>(null)
     val player: StateFlow<Player?> = _player
 
@@ -40,6 +48,8 @@ class HomeViewModel : ViewModel() {
 //        }
         getArtist()
         getPlayer()
+        getPlayLists()
+        getSuggestions()
     }
 
 //    private fun loadData() {
@@ -66,6 +76,23 @@ class HomeViewModel : ViewModel() {
         }
     }
 
+    private fun getPlayLists() {
+        viewModelScope.launch {
+            val result: List<PlayList> = withContext(Dispatchers.IO) {
+                getAllPlaylists()
+            }
+            _playlist.value = result
+        }
+    }
+    private fun getSuggestions() {
+        viewModelScope.launch {
+            val result: List<Suggestions> = withContext(Dispatchers.IO) {
+                getAllSuggestions()
+            }
+            _suggestions.value = result
+        }
+    }
+
     private suspend fun getAllArtists(): List<Artist> {
 
         return try {
@@ -77,6 +104,36 @@ class HomeViewModel : ViewModel() {
                     snapshot.toObject(Artist::class.java)
                 }
         } catch (e: Exception) {
+            Log.e("Error", e.message.toString())
+            emptyList()
+        }
+    }
+
+    private suspend fun getAllPlaylists() : List<PlayList> {
+       return try {
+           db.collection("playlists")
+               .get()
+               .await()
+               .documents
+               .mapNotNull {
+                     snapshot -> snapshot.toObject(PlayList::class.java)
+               }
+       }catch (e: Exception) {
+           Log.e("Error", e.message.toString())
+           emptyList()
+       }
+    }
+
+    private suspend fun getAllSuggestions() : List<Suggestions> {
+        return try {
+            db.collection("sugerencias")
+                .get()
+                .await()
+                .documents
+                .mapNotNull {
+                        snapshot -> snapshot.toObject(Suggestions::class.java)
+                }
+        }catch (e: Exception) {
             Log.e("Error", e.message.toString())
             emptyList()
         }
@@ -115,6 +172,7 @@ class HomeViewModel : ViewModel() {
         val ref = database.reference.child("player")
         ref.setValue(null)
     }
+
     fun AddPlayer(artist: Artist){
         val ref = database.reference.child("player")
         val player = Player(artist = artist, play = true)

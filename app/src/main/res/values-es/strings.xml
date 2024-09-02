@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">CursoFirebaseLite</string>
     <string name="title_home">Escuchadas recientes</string>
+    <string name="title_playlist">Prueba algo nuevo</string>
+    <string name="tittle_suggestions">Sugerencias para hoy</string>
+
 </resources>
