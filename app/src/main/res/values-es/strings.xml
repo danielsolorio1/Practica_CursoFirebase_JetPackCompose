@@ -3,5 +3,12 @@
     <string name="title_home">Escuchadas recientes</string>
     <string name="title_playlist">Prueba algo nuevo</string>
     <string name="tittle_suggestions">Sugerencias para hoy</string>
+    <string name="home">Inicio</string>
+    <string name="library">Tu biblioteca</string>
+    <string name="search">Buscar</string>
+    <string name="account">Cuenta</string>
+    <string name="title_programs">Programas para descubrir</string>
+    <string name="topAppbar_search">¿Qué quieres escuchar?</string>
+    <string name="xplorer_title">Explorar todo</string>
 
 </resources>

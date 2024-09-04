@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.cursofirebaselite.presentation.model.Artist
 import com.example.cursofirebaselite.presentation.model.PlayList
 import com.example.cursofirebaselite.presentation.model.Player
+import com.example.cursofirebaselite.presentation.model.Programs
 import com.example.cursofirebaselite.presentation.model.Suggestions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -38,6 +39,9 @@ class HomeViewModel : ViewModel() {
     private val _suggestions = MutableStateFlow<List<Suggestions>>(emptyList())
     val suggestions: StateFlow<List<Suggestions>> = _suggestions
 
+    private val _program = MutableStateFlow<List<Programs>>(emptyList())
+    val program: StateFlow<List<Programs>> = _program
+
     private val _player = MutableStateFlow<Player?>(null)
     val player: StateFlow<Player?> = _player
 
@@ -50,6 +54,7 @@ class HomeViewModel : ViewModel() {
         getPlayer()
         getPlayLists()
         getSuggestions()
+        getPrograms()
     }
 
 //    private fun loadData() {
@@ -92,6 +97,14 @@ class HomeViewModel : ViewModel() {
             _suggestions.value = result
         }
     }
+    private fun getPrograms() {
+        viewModelScope.launch {
+            val result: List<Programs> = withContext(Dispatchers.IO) {
+                getAllPrograms()
+            }
+            _program.value = result
+        }
+    }
 
     private suspend fun getAllArtists(): List<Artist> {
 
@@ -132,6 +145,20 @@ class HomeViewModel : ViewModel() {
                 .documents
                 .mapNotNull {
                         snapshot -> snapshot.toObject(Suggestions::class.java)
+                }
+        }catch (e: Exception) {
+            Log.e("Error", e.message.toString())
+            emptyList()
+        }
+    }
+    private suspend fun getAllPrograms() : List<Programs> {
+        return try {
+            db.collection("programas")
+                .get()
+                .await()
+                .documents
+                .mapNotNull {
+                        snapshot -> snapshot.toObject(Programs::class.java)
                 }
         }catch (e: Exception) {
             Log.e("Error", e.message.toString())

@@ -21,3 +21,5 @@ val UnselectedField = Color(0xFF4a4a4a)
 
 val playerColor = Color(0xFF2A4A46)
 val colorPlaylist = Color(0xFFD1D1D1)
+val colorCategory = Color(0xFF18B11B)
+val colorSearcher = Color(0xFF333333)
