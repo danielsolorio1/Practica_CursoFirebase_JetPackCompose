@@ -48,7 +48,7 @@ fun InitialScreen(navigateToLogin: () -> Unit = {}, navigateToSignUp: () -> Unit
     ) {
         Spacer(modifier = Modifier.weight(1f))
         Image(
-            painter = painterResource(id = R.drawable.spotify),
+            painter = painterResource(id = R.drawable.spotifyy),
             contentDescription = "",
             modifier = Modifier.clip(CircleShape)
         )

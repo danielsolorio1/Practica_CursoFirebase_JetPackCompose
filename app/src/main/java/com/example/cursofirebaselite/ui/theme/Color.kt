@@ -23,3 +23,8 @@ val playerColor = Color(0xFF2A4A46)
 val colorPlaylist = Color(0xFFD1D1D1)
 val colorCategory = Color(0xFF18B11B)
 val colorSearcher = Color(0xFF333333)
+val negroTransparent = Color(0xE6000000)
+val colorYell = Color(0xFFEEC24D)
+val colorBl = Color(0xFFA4D0F1)
+
+

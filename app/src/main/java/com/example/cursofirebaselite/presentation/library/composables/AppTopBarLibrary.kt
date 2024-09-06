@@ -1,4 +1,4 @@
-package com.example.cursofirebaselite.presentation.search.composables
+package com.example.cursofirebaselite.presentation.library.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.CameraAlt
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,10 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cursofirebaselite.R
 
-
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun AppTopBar(scrollBehavior: TopAppBarScrollBehavior) {
+fun AppTopBarLibrary(scrollBehavior: TopAppBarScrollBehavior) {
     TopAppBar(
         title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -50,7 +51,7 @@ fun AppTopBar(scrollBehavior: TopAppBarScrollBehavior) {
                 Spacer(modifier = Modifier.width(12.dp))
                 // Title text
                 Text(
-                    text = stringResource(id = R.string.search),
+                    text = stringResource(id = R.string.library),
                     fontSize = 22.sp,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold
@@ -60,9 +61,18 @@ fun AppTopBar(scrollBehavior: TopAppBarScrollBehavior) {
         actions = {
             IconButton(onClick = { /* Add action */ }) {
                 Icon(
-                    Icons.Outlined.CameraAlt,
+                    Icons.Outlined.Search,
                     contentDescription = null,
-                    tint = Color.White
+                    tint = Color.White,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+            IconButton(onClick = { /* Add action */ }) {
+                Icon(
+                    Icons.Outlined.Add,
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(32.dp)
                 )
             }
         },

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CursoFirebaseLite</string>
+    <string name="app_name">Spotifay</string>
     <string name="title_home">Recently Played</string>
     <string name="title_playlist">Try something new</string>
     <string name="tittle_suggestions">Suggestions for today</string>
@@ -8,6 +8,20 @@
     <string name="search">Search</string>
     <string name="account">Account</string>
     <string name="title_programs">Programs to discover</string>
-    <string name="topAppbar_search">¿Qué quieres escuchar?</string>
-    <string name="xplorer_title">Explorar todo</string>
+    <string name="topAppbar_search">What do you want to hear?</string>
+    <string name="xplorer_title">Explore all</string>
+    <string name="library_title">Recent</string>
+    <string name="premium">Premium</string>
+    <string name="why_premium">Why join Premium?</string>
+    <string name="premium_feature_1">Listen to music without ads</string>
+    <string name="premium_feature_2">Download and listen offline</string>
+    <string name="premium_feature_3">Play songs in any order you wan</string>
+    <string name="premium_feature_4">High quality sound</string>
+    <string name="premium_feature_5">Listen to content with your favorite people in real time</string>
+    <string name="premium_feature_6">Organize the playback queue</string>
+    <string name="plans_avaiable">Available plans</string>
+    <string name="premium_plan_solo">Individual</string>
+    <string name="premium_plan_student">Students</string>
+    <string name="premium_plan_duo">Duo</string>
+    <string name="premium_plan_family">Family</string>
 </resources>

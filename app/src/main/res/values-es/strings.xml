@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CursoFirebaseLite</string>
+    <string name="app_name">Spotifay</string>
     <string name="title_home">Escuchadas recientes</string>
     <string name="title_playlist">Prueba algo nuevo</string>
     <string name="tittle_suggestions">Sugerencias para hoy</string>
@@ -10,5 +10,19 @@
     <string name="title_programs">Programas para descubrir</string>
     <string name="topAppbar_search">¿Qué quieres escuchar?</string>
     <string name="xplorer_title">Explorar todo</string>
+    <string name="library_title">Recientes</string>
+    <string name="premium">Premium</string>
+    <string name="why_premium">¿Por qué unirte a Premium?</string>
+    <string name="premium_feature_1">Escucha música sin anuncios</string>
+    <string name="premium_feature_2">Descarga y escucha en modo offline</string>
+    <string name="premium_feature_3">Reproduce canciones en el orden que quieras</string>
+    <string name="premium_feature_4">Sonido de alta calidad</string>
+    <string name="premium_feature_5">Escucha contenido con tus personas favoritas en tiempo real</string>
+    <string name="premium_feature_6">Organiza la fila de reproducción</string>
+    <string name="plans_avaiable">Planes disponibles</string>
+    <string name="premium_plan_solo">Individual</string>
+    <string name="premium_plan_student">Estudiantes</string>
+    <string name="premium_plan_duo">Duo</string>
+    <string name="premium_plan_family">Familiar</string>
 
 </resources>

@@ -2,9 +2,11 @@ package com.example.cursofirebaselite.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.cursofirebaselite.R
 
 // Set of Material typography styles to start with
 val Typography = Typography(
@@ -32,3 +34,7 @@ val Typography = Typography(
     )
     */
 )
+val fontArtist = FontFamily(Font(R.font.open))
+val fontOpenSemiBold = FontFamily(Font(R.font.open_semi))
+val fontOpenBold = FontFamily(Font(R.font.open_bold))
+val fontKarlaBold = FontFamily(Font(R.font.karla_bold))

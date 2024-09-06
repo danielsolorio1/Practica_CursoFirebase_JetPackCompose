@@ -1,15 +1,18 @@
 package com.example.cursofirebaselite.presentation.navigation
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LibraryMusic
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.WorkspacePremium
 import androidx.compose.material.icons.outlined.AccountBox
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.LibraryMusic
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.WorkspacePremium
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,17 +29,21 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cursofirebaselite.R
-import com.example.cursofirebaselite.presentation.account.AccountUser
 import com.example.cursofirebaselite.presentation.home.HomeScreen
 import com.example.cursofirebaselite.presentation.home.Screen
+import com.example.cursofirebaselite.presentation.library.LibraryScreen
+import com.example.cursofirebaselite.presentation.premium.Premium
 import com.example.cursofirebaselite.presentation.search.SearchScreen
 import com.example.cursofirebaselite.ui.theme.colorPlaylist
 import com.google.firebase.auth.FirebaseAuth
@@ -49,27 +56,27 @@ fun Navigation() {
     val auth = FirebaseAuth.getInstance()
     val homeTab = TabBarItem(
         title = stringResource(id = R.string.home),
-        selectedIcon = Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home
+        selectedIcon = painterResource(id = R.drawable.home_selected) ,
+        unselectedIcon = painterResource(id = R.drawable.home_unselected)
     )
     val searchTab = TabBarItem(
         title = stringResource(id = R.string.search),
-        selectedIcon = Icons.Filled.Search,
-        unselectedIcon = Icons.Outlined.Search,
+        selectedIcon = painterResource(id = R.drawable.search_selected),
+        unselectedIcon = painterResource(id = R.drawable.search_unselected),
     )
-    val settingsTab = TabBarItem(
+    val libraryTab = TabBarItem(
         title = stringResource(id = R.string.library),
-        selectedIcon = Icons.Filled.LibraryMusic,
-        unselectedIcon = Icons.Outlined.LibraryMusic
+        selectedIcon = painterResource(id = R.drawable.library_selected),
+        unselectedIcon = painterResource(id = R.drawable.library_unselected)
     )
-    val accountTab = TabBarItem(
-        title = stringResource(id = R.string.account),
-        selectedIcon = Icons.Filled.AccountBox,
-        unselectedIcon = Icons.Outlined.AccountBox
+    val premiumTab = TabBarItem(
+        title = stringResource(id = R.string.premium),
+        selectedIcon = painterResource(id = R.drawable.spo),
+        unselectedIcon = painterResource(id = R.drawable.spo)
     )
 
     // creating a list of all the tabs
-    val tabBarItems = listOf(homeTab, searchTab, settingsTab, accountTab)
+    val tabBarItems = listOf(homeTab, searchTab, libraryTab, premiumTab)
 
     val navController = rememberNavController()
 
@@ -86,11 +93,11 @@ fun Navigation() {
                 composable(searchTab.title) {
                     SearchScreen()
                 }
-                composable(settingsTab.title) {
-                    Text(settingsTab.title)
+                composable(libraryTab.title) {
+                    LibraryScreen()
                 }
-                composable(accountTab.title) {
-                    AccountUser(auth)
+                composable(premiumTab.title) {
+                    Premium()
                 }
             }
         }
@@ -101,8 +108,8 @@ fun Navigation() {
 
 data class TabBarItem(
     val title: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
+    val selectedIcon: Painter,
+    val unselectedIcon: Painter,
     val badgeAmount: Int? = null
 )
 
@@ -111,7 +118,7 @@ fun TabView(tabBarItems: List<TabBarItem>, navController: NavController) {
     var selectedTabIndex by rememberSaveable {
         mutableStateOf(0)
     }
-   val containerColor = Color(0x80000000)
+   val containerColor = Color(0xE6000000)
     NavigationBar(
         containerColor = containerColor,
     ) {
@@ -143,19 +150,20 @@ fun TabView(tabBarItems: List<TabBarItem>, navController: NavController) {
 @Composable
 fun TabBarIconView(
     isSelected: Boolean,
-    selectedIcon: ImageVector,
-    unselectedIcon: ImageVector,
+    selectedIcon: Painter,
+    unselectedIcon: Painter,
     title: String,
     badgeAmount: Int? = null
 ) {
     BadgedBox(badge = { TabBarBadgeView(badgeAmount) }) {
         Icon(
-            imageVector = if (isSelected) {
+            painter = if (isSelected) {
                 selectedIcon
             } else {
                 unselectedIcon
             },
-            contentDescription = title
+            contentDescription = title,
+            modifier = Modifier.size(25.dp)
         )
     }
 }

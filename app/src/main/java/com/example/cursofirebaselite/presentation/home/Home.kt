@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cursofirebaselite.R
+import com.example.cursofirebaselite.presentation.home.composables.AppTopBarHome
 import com.example.cursofirebaselite.presentation.home.composables.ArtistItem
 import com.example.cursofirebaselite.presentation.home.composables.PlayerComponent
 import com.example.cursofirebaselite.presentation.home.composables.PlaylistItem
@@ -45,6 +46,9 @@ fun HomeScreen(viewModel: HomeViewModel = HomeViewModel()) {
     Screen {
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
         Scaffold(
+            topBar = {
+                AppTopBarHome(scrollBehavior)
+            },
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
         ) { padding ->
             val artist: State<List<Artist>> = viewModel.artist.collectAsState()
