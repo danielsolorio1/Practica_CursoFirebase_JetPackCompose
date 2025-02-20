@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.cursofirebaselite.R
 import com.example.cursofirebaselite.presentation.home.Screen
 import com.example.cursofirebaselite.presentation.premium.composables.DuoPlan
@@ -30,10 +32,11 @@ import com.example.cursofirebaselite.presentation.premium.composables.IndexPremi
 import com.example.cursofirebaselite.presentation.premium.composables.SoloPlan
 import com.example.cursofirebaselite.presentation.premium.composables.StudentPlan
 import com.example.cursofirebaselite.ui.theme.Black
+import com.google.firebase.auth.FirebaseAuth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Premium() {
+fun Premium(auth: FirebaseAuth, navHostController: NavHostController) {
 
     Screen {
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -66,6 +69,15 @@ fun Premium() {
                     StudentPlan()
                     DuoPlan()
                     FamilyPlan()
+//                    Button(
+//                        onClick = {
+//                            auth.signOut()
+//                            navHostController.navigate("initial")
+//                        },
+//                        modifier = Modifier.padding(20.dp)
+//                    ) {
+//                        Text("Logout")
+//                    }
                     Spacer(modifier = Modifier.height(100.dp))
                 }
             }

@@ -97,7 +97,7 @@ fun Navigation() {
                     LibraryScreen()
                 }
                 composable(premiumTab.title) {
-                    Premium()
+                    Premium(auth, navController)
                 }
             }
         }

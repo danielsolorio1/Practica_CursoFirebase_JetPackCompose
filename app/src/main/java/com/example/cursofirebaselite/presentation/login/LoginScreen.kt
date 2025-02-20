@@ -83,7 +83,6 @@ fun LoginScreen(auth: FirebaseAuth, navigateToHome:() -> Unit) {
         Spacer(modifier = Modifier.height(48.dp))
         Button(onClick = {
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-
                 if (task.isSuccessful) {
                     navigateToHome()
                     // Login exitoso

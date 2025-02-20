@@ -1,16 +1,24 @@
 package com.example.cursofirebaselite.presentation.home
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -21,12 +29,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.example.cursofirebaselite.R
 import com.example.cursofirebaselite.presentation.home.composables.AppTopBarHome
 import com.example.cursofirebaselite.presentation.home.composables.ArtistItem
@@ -56,6 +69,48 @@ fun HomeScreen(viewModel: HomeViewModel = HomeViewModel()) {
             val playlist: State<List<PlayList>> = viewModel.playlist.collectAsState()
             val suggestions: State<List<Suggestions>> = viewModel.suggestions.collectAsState()
             val programs: State<List<Programs>> = viewModel.program.collectAsState()
+            val blockVersion by viewModel.blockVersion.collectAsState()
+
+            if (blockVersion) {
+                val context = LocalContext.current
+                Dialog(
+                    onDismissRequest = { },
+                    properties = DialogProperties(
+                        dismissOnBackPress = false,
+                        dismissOnClickOutside = false
+                    )
+                ) {
+                    Card(colors = CardDefaults.cardColors(containerColor = Color.White)) {
+                        Column(
+                            modifier = Modifier
+                                .padding(24.dp)
+                                .fillMaxWidth()
+                                .height(300.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = "ACTUALIZA",
+                                fontSize = 22.sp,
+                                color = Black,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(modifier = Modifier.height(24.dp))
+                            Text(
+                                text = "Para poder disfrutar de todo nuestro contenido actualice la app",
+                                fontSize = 16.sp,
+                                color = Color.Gray,
+                                textAlign = TextAlign.Center
+                            )
+                            Spacer(modifier = Modifier.weight(1f))
+                            Button(onClick = { navigateToPlayStore(context) }) {
+                                Text(text = "¡Actualizar!")
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
+                    }
+
+                }
+            }
 
             Box(
                 modifier = Modifier
@@ -138,6 +193,24 @@ fun HomeScreen(viewModel: HomeViewModel = HomeViewModel()) {
     }
 }
 
+fun navigateToPlayStore(context: Context) {
+    val appPackage = context.packageName
+    try {
+        context.startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("market://details?id=$appPackage")
+            )
+        )
+    } catch (e: Exception) {
+        context.startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://play.google.com/store/apps/details?id=$appPackage")
+            )
+        )
+    }
+}
 
 //fun addArtist(db:FirebaseFirestore){
 //    val random = (1..10000).random()

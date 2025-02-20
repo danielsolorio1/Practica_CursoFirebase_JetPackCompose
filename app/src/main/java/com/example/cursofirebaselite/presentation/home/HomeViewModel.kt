@@ -3,6 +3,7 @@ package com.example.cursofirebaselite.presentation.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cursofirebaselite.domain.CanAccessToApp
 import com.example.cursofirebaselite.presentation.model.Artist
 import com.example.cursofirebaselite.presentation.model.PlayList
 import com.example.cursofirebaselite.presentation.model.Player
@@ -27,6 +28,7 @@ import kotlinx.coroutines.withContext
 
 class HomeViewModel : ViewModel() {
 
+    private var canAccessToApp: CanAccessToApp = CanAccessToApp()
     private var database = Firebase.database // Realtime Database
     private var db: FirebaseFirestore = Firebase.firestore // Firestore database
 
@@ -45,11 +47,15 @@ class HomeViewModel : ViewModel() {
     private val _player = MutableStateFlow<Player?>(null)
     val player: StateFlow<Player?> = _player
 
+    private val _blockVersion = MutableStateFlow<Boolean>(false)
+    val blockVersion:StateFlow<Boolean> = _blockVersion
+
 
     init {
 //        repeat(20){
 //            loadData()
 //        }
+        checkUserVersion()
         getArtist()
         getPlayer()
         getPlayLists()
@@ -57,7 +63,17 @@ class HomeViewModel : ViewModel() {
         getPrograms()
     }
 
-//    private fun loadData() {
+    private fun checkUserVersion() {
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO){
+                canAccessToApp()
+            }
+            _blockVersion.value = !result
+
+        }
+    }
+
+    //    private fun loadData() {
 //        val random = (1..10000).random()
 //        val artist = Artist(name = "Perrito $random", "Perrito chulo $random","https://images.pexels.com/photos/1458916/pexels-photo-1458916.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500")
 //        db.collection("artist")
@@ -66,7 +82,7 @@ class HomeViewModel : ViewModel() {
     private fun getPlayer() {
         viewModelScope.launch {
             collectPlayer().collect { snapshot ->
-             val player = snapshot.getValue(Player::class.java)
+                val player = snapshot.getValue(Player::class.java)
                 _player.value = player
             }
         }
@@ -89,6 +105,7 @@ class HomeViewModel : ViewModel() {
             _playlist.value = result
         }
     }
+
     private fun getSuggestions() {
         viewModelScope.launch {
             val result: List<Suggestions> = withContext(Dispatchers.IO) {
@@ -97,6 +114,7 @@ class HomeViewModel : ViewModel() {
             _suggestions.value = result
         }
     }
+
     private fun getPrograms() {
         viewModelScope.launch {
             val result: List<Programs> = withContext(Dispatchers.IO) {
@@ -122,45 +140,46 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    private suspend fun getAllPlaylists() : List<PlayList> {
-       return try {
-           db.collection("playlists")
-               .get()
-               .await()
-               .documents
-               .mapNotNull {
-                     snapshot -> snapshot.toObject(PlayList::class.java)
-               }
-       }catch (e: Exception) {
-           Log.e("Error", e.message.toString())
-           emptyList()
-       }
+    private suspend fun getAllPlaylists(): List<PlayList> {
+        return try {
+            db.collection("playlists")
+                .get()
+                .await()
+                .documents
+                .mapNotNull { snapshot ->
+                    snapshot.toObject(PlayList::class.java)
+                }
+        } catch (e: Exception) {
+            Log.e("Error", e.message.toString())
+            emptyList()
+        }
     }
 
-    private suspend fun getAllSuggestions() : List<Suggestions> {
+    private suspend fun getAllSuggestions(): List<Suggestions> {
         return try {
             db.collection("sugerencias")
                 .get()
                 .await()
                 .documents
-                .mapNotNull {
-                        snapshot -> snapshot.toObject(Suggestions::class.java)
+                .mapNotNull { snapshot ->
+                    snapshot.toObject(Suggestions::class.java)
                 }
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             Log.e("Error", e.message.toString())
             emptyList()
         }
     }
-    private suspend fun getAllPrograms() : List<Programs> {
+
+    private suspend fun getAllPrograms(): List<Programs> {
         return try {
             db.collection("programas")
                 .get()
                 .await()
                 .documents
-                .mapNotNull {
-                        snapshot -> snapshot.toObject(Programs::class.java)
+                .mapNotNull { snapshot ->
+                    snapshot.toObject(Programs::class.java)
                 }
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             Log.e("Error", e.message.toString())
             emptyList()
         }
@@ -187,7 +206,7 @@ class HomeViewModel : ViewModel() {
     }
 
     fun onPlaySelected() {
-        if (player.value != null){
+        if (player.value != null) {
             val currentPlayer = _player.value?.copy(play = !player.value?.play!!)
             val ref = database.reference.child("player")
             ref.setValue(currentPlayer)
@@ -200,7 +219,7 @@ class HomeViewModel : ViewModel() {
         ref.setValue(null)
     }
 
-    fun AddPlayer(artist: Artist){
+    fun AddPlayer(artist: Artist) {
         val ref = database.reference.child("player")
         val player = Player(artist = artist, play = true)
         ref.setValue(player)
